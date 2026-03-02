@@ -8,7 +8,7 @@ from rich.panel import Panel
 from rich.table import Table
 from rich.text import Text
 
-from fineprint.models import AnalysisResult, Issue, Protection, Severity
+from contractguard.models import AnalysisResult, Issue, Protection, Severity
 
 console = Console()
 

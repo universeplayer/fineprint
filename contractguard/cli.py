@@ -1,4 +1,4 @@
-"""Command-line interface for fineprint."""
+"""Command-line interface for contractguard."""
 
 from __future__ import annotations
 
@@ -8,13 +8,13 @@ from pathlib import Path
 import click
 from rich.console import Console
 
-from fineprint import __version__
+from contractguard import __version__
 
 console = Console()
 
 
 @click.group()
-@click.version_option(__version__, prog_name="fineprint")
+@click.version_option(__version__, prog_name="contractguard")
 def main():
     """AI agent that reads the fine print so you don't have to.
 
@@ -39,13 +39,13 @@ def scan(file: str, model: str | None, api_key: str | None, base_url: str | None
 
     \b
     Examples:
-        fineprint scan lease.pdf
-        fineprint scan contract.docx --model openai/gpt-4o
-        fineprint scan nda.txt -o report.md
+        contractguard scan lease.pdf
+        contractguard scan contract.docx --model openai/gpt-4o
+        contractguard scan nda.txt -o report.md
     """
-    from fineprint.analyzer import DEFAULT_MODEL, analyze_contract
-    from fineprint.parser import extract_text
-    from fineprint.report import generate_markdown_report, print_report
+    from contractguard.analyzer import DEFAULT_MODEL, analyze_contract
+    from contractguard.parser import extract_text
+    from contractguard.report import generate_markdown_report, print_report
 
     model = model or DEFAULT_MODEL
 

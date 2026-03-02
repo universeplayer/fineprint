@@ -1,14 +1,14 @@
 <div align="center">
 
-# 🔍 fineprint
+# ContractGuard
 
-**AI agent that reads the fine print so you don't have to.**
+**AI-powered contract review agent — never sign a bad contract again.**
 
 Upload any contract → get red flags, unfair terms, and plain-English explanations in seconds.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![CI](https://github.com/universeplayer/fineprint/actions/workflows/ci.yml/badge.svg)](https://github.com/universeplayer/fineprint/actions)
+[![CI](https://github.com/universeplayer/ContractGuard/actions/workflows/ci.yml/badge.svg)](https://github.com/universeplayer/ContractGuard/actions)
 
 **[English](README.md) | [中文](README_CN.md)**
 
@@ -23,26 +23,14 @@ You're about to sign a lease, NDA, or employment contract. The document is 15 pa
 1. **Pay a lawyer $300-500/hour** to review it
 2. **Hope for the best** and sign blindly
 
-Most people choose option 2. **fineprint** gives you option 3:
+Most people choose option 2. **ContractGuard** gives you option 3:
 
 ```bash
-fineprint scan my-lease.pdf
+contractguard scan my-lease.pdf
 ```
 
 ```
 ✔ Parsed my-lease.pdf (4,521 characters)
-
-┌────────────────────────────────────────┐
-│  FINEPRINT Contract Analysis Report    │
-│  Contract Type: LEASE                  │
-└────────────────────────────────────────┘
-
-╭─ Summary ───────────────────────────────────────────╮
-│ A 12-month residential lease with several           │
-│ one-sided clauses that heavily favor the landlord.   │
-│ Multiple provisions may be unenforceable under       │
-│ California tenant protection laws.                   │
-╰─────────────────────────────────────────────────────╯
 
 ⬤ RED FLAGS (5 found)
 ==================================================
@@ -73,11 +61,8 @@ fineprint scan my-lease.pdf
 ==================================================
   ...
 
-╭─ FAIRNESS SCORE ──────────────────────────────────╮
-│  ████████████░░░░░░░░░░░░░░  D  (28/100)          │
-│                                                     │
-│  5 red flags  3 warnings  2 protections  4 missing │
-╰─────────────────────────────────────────────────────╯
+FAIRNESS SCORE: D (28/100)
+  5 red flags  3 warnings  2 protections  4 missing
 ```
 
 ## Quick Start
@@ -85,12 +70,12 @@ fineprint scan my-lease.pdf
 ### Installation
 
 ```bash
-pip install fineprint-ai
+pip install contractguard
 ```
 
 ### Set up your API key
 
-fineprint works with any OpenAI-compatible API. The easiest way is [OpenRouter](https://openrouter.ai/) (supports Claude, GPT-4, DeepSeek, etc.):
+ContractGuard works with any OpenAI-compatible API. The easiest way is [OpenRouter](https://openrouter.ai/) (supports Claude, GPT-4, DeepSeek, etc.):
 
 ```bash
 export OPENROUTER_API_KEY=sk-or-...
@@ -106,36 +91,36 @@ export OPENAI_BASE_URL=https://api.openai.com/v1
 
 ```bash
 # Scan a PDF lease
-fineprint scan lease.pdf
+contractguard scan lease.pdf
 
 # Scan a Word document
-fineprint scan contract.docx
+contractguard scan contract.docx
 
 # Scan a text file
-fineprint scan nda.txt
+contractguard scan nda.txt
 
 # Use a specific model
-fineprint scan contract.pdf --model openai/gpt-4o
+contractguard scan contract.pdf --model openai/gpt-4o
 
 # Save report as markdown
-fineprint scan contract.pdf -o report.md
+contractguard scan contract.pdf -o report.md
 
 # Get raw JSON output
-fineprint scan contract.pdf --json
+contractguard scan contract.pdf --json
 ```
 
 ### Python API
 
 ```python
-from fineprint.analyzer import analyze_contract
-from fineprint.parser import extract_text
+from contractguard.analyzer import analyze_contract
+from contractguard.parser import extract_text
 
 text = extract_text("my-lease.pdf")
 result = analyze_contract(text)
 
 print(f"Fairness: {result.fairness_grade} ({result.fairness_score}/100)")
 for flag in result.red_flags:
-    print(f"🔴 {flag.title}: {flag.explanation}")
+    print(f"RED FLAG - {flag.title}: {flag.explanation}")
 ```
 
 ## Supported Formats
@@ -149,15 +134,15 @@ for flag in result.red_flags:
 
 ## Supported Contract Types
 
-fineprint automatically detects the contract type and adjusts its analysis:
+ContractGuard automatically detects the contract type and adjusts its analysis:
 
-- 🏠 **Residential Leases** — rent, deposits, maintenance, access rights
-- 📝 **NDAs** — scope, duration, non-compete clauses
-- 💼 **Employment Contracts** — non-compete, IP assignment, termination
-- 🤝 **Freelance/Contractor Agreements** — payment terms, IP ownership
-- 📱 **SaaS Terms of Service** — data ownership, liability, auto-renewal
-- 💰 **Loan Agreements** — interest rates, prepayment penalties, default terms
-- 🛒 **Purchase Agreements** — warranties, returns, dispute resolution
+- **Residential Leases** — rent, deposits, maintenance, access rights
+- **NDAs** — scope, duration, non-compete clauses
+- **Employment Contracts** — non-compete, IP assignment, termination
+- **Freelance/Contractor Agreements** — payment terms, IP ownership
+- **SaaS Terms of Service** — data ownership, liability, auto-renewal
+- **Loan Agreements** — interest rates, prepayment penalties, default terms
+- **Purchase Agreements** — warranties, returns, dispute resolution
 
 ## How It Works
 
@@ -178,54 +163,54 @@ fineprint automatically detects the contract type and adjusts its analysis:
 ```bash
 # OpenRouter (default) - access to 100+ models
 export OPENROUTER_API_KEY=sk-or-...
-fineprint scan contract.pdf --model anthropic/claude-sonnet-4
+contractguard scan contract.pdf --model anthropic/claude-sonnet-4
 
 # OpenAI
 export OPENAI_API_KEY=sk-...
 export OPENAI_BASE_URL=https://api.openai.com/v1
-fineprint scan contract.pdf --model gpt-4o
+contractguard scan contract.pdf --model gpt-4o
 
-# Local models (Ollama)
+# Local models (Ollama) — your data never leaves your machine
 export OPENAI_BASE_URL=http://localhost:11434/v1
 export OPENAI_API_KEY=ollama
-fineprint scan contract.pdf --model llama3.1
+contractguard scan contract.pdf --model llama3.1
 ```
 
 ## Try it with the sample contracts
 
 ```bash
 # Clone the repo
-git clone https://github.com/universeplayer/fineprint.git
-cd fineprint
+git clone https://github.com/universeplayer/ContractGuard.git
+cd ContractGuard
 
 # Install
 pip install -e .
 
 # Scan the sample lease (intentionally has many red flags)
 export OPENROUTER_API_KEY=sk-or-...
-fineprint scan examples/sample_lease.txt
+contractguard scan examples/sample_lease.txt
 
 # Scan the sample NDA
-fineprint scan examples/sample_nda.txt
+contractguard scan examples/sample_nda.txt
 ```
 
 ## FAQ
 
 **Is this legal advice?**
-No. fineprint is an educational tool that helps you understand contract terms. Always consult a qualified attorney for legal advice.
+No. ContractGuard is an educational tool that helps you understand contract terms. Always consult a qualified attorney for legal advice.
 
 **Is my contract data sent to the cloud?**
 The contract text is sent to the LLM provider you configure (OpenRouter, OpenAI, etc.). For maximum privacy, use a local model via Ollama.
 
 **How accurate is it?**
-fineprint uses state-of-the-art LLMs (Claude, GPT-4) which are highly capable at legal text analysis. However, it may miss nuances that a human lawyer would catch. Think of it as a first-pass filter, not a replacement for legal counsel.
+ContractGuard uses state-of-the-art LLMs (Claude, GPT-4) which are highly capable at legal text analysis. However, it may miss nuances that a human lawyer would catch. Think of it as a first-pass filter, not a replacement for legal counsel.
 
 **What languages are supported?**
-fineprint works with contracts in any language supported by the underlying LLM. English contracts produce the best results.
+ContractGuard works with contracts in any language supported by the underlying LLM. English contracts produce the best results.
 
 ## Contributing
 
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions are welcome! Please open an issue or submit a PR.
 
 ## License
 
@@ -235,8 +220,8 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 
 <div align="center">
 
-**If fineprint saved you from a bad contract, consider giving it a ⭐**
+**If ContractGuard saved you from a bad contract, consider giving it a star!**
 
-[Report a Bug](https://github.com/universeplayer/fineprint/issues) · [Request a Feature](https://github.com/universeplayer/fineprint/issues)
+[Report a Bug](https://github.com/universeplayer/ContractGuard/issues) · [Request a Feature](https://github.com/universeplayer/ContractGuard/issues)
 
 </div>

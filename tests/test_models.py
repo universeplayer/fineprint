@@ -1,6 +1,6 @@
 """Tests for data models."""
 
-from fineprint.models import AnalysisResult, ContractType, Issue, Protection, Severity
+from contractguard.models import AnalysisResult, ContractType, Issue, Protection, Severity
 
 
 def test_issue_creation():

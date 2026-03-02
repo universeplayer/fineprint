@@ -46,7 +46,7 @@ def _extract_pdf(path: Path) -> str:
     if not text_parts:
         raise ValueError(
             f"Could not extract text from PDF: {path}. "
-            f"The PDF may be image-based. Try OCR mode: fineprint scan --ocr {path}"
+            f"The PDF may be image-based. Try OCR mode: contractguard scan --ocr {path}"
         )
 
     return "\n\n".join(text_parts)

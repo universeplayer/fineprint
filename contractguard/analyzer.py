@@ -8,8 +8,8 @@ import os
 from openai import OpenAI
 from pydantic import ValidationError
 
-from fineprint.models import AnalysisResult
-from fineprint.prompts import ANALYSIS_PROMPT, SYSTEM_PROMPT
+from contractguard.models import AnalysisResult
+from contractguard.prompts import ANALYSIS_PROMPT, SYSTEM_PROMPT
 
 
 DEFAULT_MODEL = "anthropic/claude-sonnet-4"

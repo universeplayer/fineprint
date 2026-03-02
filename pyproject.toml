@@ -3,16 +3,16 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "fineprint-ai"
+name = "contractguard"
 version = "0.1.0"
-description = "AI agent that reads the fine print so you don't have to"
+description = "AI-powered contract review agent — scan any contract for red flags, unfair terms, and missing protections"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 authors = [
     { name = "Yufeng He", email = "40085740+universeplayer@users.noreply.github.com" },
 ]
-keywords = ["ai", "contract", "legal", "agent", "llm", "review"]
+keywords = ["ai", "contract", "legal", "agent", "llm", "review", "guard", "red-flag"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: End Users/Desktop",
@@ -38,15 +38,15 @@ ocr = ["pytesseract>=0.3"]
 dev = ["pytest>=7.0", "pytest-asyncio>=0.21", "ruff>=0.4"]
 
 [project.scripts]
-fineprint = "fineprint.cli:main"
+contractguard = "contractguard.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/universeplayer/fineprint"
-Repository = "https://github.com/universeplayer/fineprint"
-Issues = "https://github.com/universeplayer/fineprint/issues"
+Homepage = "https://github.com/universeplayer/ContractGuard"
+Repository = "https://github.com/universeplayer/ContractGuard"
+Issues = "https://github.com/universeplayer/ContractGuard/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["fineprint"]
+packages = ["contractguard"]
 
 [tool.ruff]
 line-length = 100
