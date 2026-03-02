@@ -10,6 +10,8 @@ Upload any contract → get red flags, unfair terms, and plain-English explanati
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![CI](https://github.com/universeplayer/fineprint/actions/workflows/ci.yml/badge.svg)](https://github.com/universeplayer/fineprint/actions)
 
+**[English](README.md) | [中文](README_CN.md)**
+
 </div>
 
 ---
