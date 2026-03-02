@@ -161,14 +161,6 @@ fineprint automatically detects the contract type and adjusts its analysis:
 
 ## How It Works
 
-```
-┌─────────────┐     ┌──────────────┐     ┌──────────────┐     ┌─────────────┐
-│  Upload      │────▶│  Parse       │────▶│  Analyze     │────▶│  Report     │
-│  Contract    │     │  Document    │     │  with LLM    │     │  Red Flags  │
-│  (PDF/DOCX)  │     │  Extract Text│     │  Agent       │     │  + Score    │
-└─────────────┘     └──────────────┘     └──────────────┘     └─────────────┘
-```
-
 1. **Parse** — Extract text from PDF, DOCX, or TXT files
 2. **Detect** — Automatically identify the contract type
 3. **Analyze** — AI agent reviews every clause for:
