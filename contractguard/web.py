@@ -9,7 +9,7 @@ from contractguard.parser import extract_text
 from contractguard.report import generate_markdown_report
 
 
-def _analyze(file, model: str, api_key: str):
+def _analyze(file, model: str, api_key: str, lang: str = "en"):
     if file is None:
         return "Upload a file to get started.", "", "", ""
 
@@ -18,7 +18,7 @@ def _analyze(file, model: str, api_key: str):
     except Exception as e:
         return f"**Error:** {e}", "", "", ""
 
-    kwargs = {"contract_text": text, "model": model or "gpt-4o"}
+    kwargs = {"contract_text": text, "model": model or "gpt-4o", "lang": lang}
     if api_key and api_key.strip():
         kwargs["api_key"] = api_key.strip()
 
@@ -120,6 +120,11 @@ def create_app() -> gr.Blocks:
                     type="password",
                     placeholder="sk-...",
                 )
+                lang_input = gr.Dropdown(
+                    label="Language",
+                    choices=[("English", "en"), ("中文", "zh")],
+                    value="en",
+                )
                 scan_btn = gr.Button("Scan Contract", variant="primary", size="lg")
 
             with gr.Column(scale=1, min_width=280):
@@ -134,7 +139,7 @@ def create_app() -> gr.Blocks:
 
         scan_btn.click(
             fn=_analyze,
-            inputs=[file_input, model_input, api_key_input],
+            inputs=[file_input, model_input, api_key_input, lang_input],
             outputs=[score_output, summary_output, issues_output, protections_output],
         )
 

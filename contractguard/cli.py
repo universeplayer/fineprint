@@ -31,8 +31,9 @@ def main():
 @click.option("--base-url", "-u", envvar="OPENROUTER_BASE_URL", help="API base URL")
 @click.option("--output", "-o", type=click.Path(), help="Save markdown report to file")
 @click.option("--json", "json_output", is_flag=True, help="Output raw JSON instead of formatted report")
+@click.option("--lang", "-l", type=click.Choice(["en", "zh"]), default="en", help="Analysis language (en or zh)")
 def scan(file: str, model: str | None, api_key: str | None, base_url: str | None,
-         output: str | None, json_output: bool):
+         output: str | None, json_output: bool, lang: str):
     """Scan a contract for red flags and unfair terms.
 
     Supports PDF, DOCX, and TXT files.
@@ -67,6 +68,7 @@ def scan(file: str, model: str | None, api_key: str | None, base_url: str | None
                 model=model,
                 api_key=api_key,
                 base_url=base_url,
+                lang=lang,
             )
         except Exception as e:
             console.print(f"[bold red]Error:[/bold red] {e}")

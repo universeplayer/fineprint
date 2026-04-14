@@ -9,7 +9,7 @@ from openai import OpenAI
 from pydantic import ValidationError
 
 from contractguard.models import AnalysisResult
-from contractguard.prompts import ANALYSIS_PROMPT, SYSTEM_PROMPT
+from contractguard.prompts import get_prompts
 
 
 DEFAULT_MODEL = "anthropic/claude-sonnet-4"
@@ -42,6 +42,7 @@ def analyze_contract(
     model: str = DEFAULT_MODEL,
     api_key: str | None = None,
     base_url: str | None = None,
+    lang: str = "en",
 ) -> AnalysisResult:
     """Analyze a contract and return structured results.
 
@@ -62,12 +63,13 @@ def analyze_contract(
         contract_text = contract_text[:MAX_CONTRACT_CHARS] + "\n\n[... document truncated ...]"
 
     client = get_client(api_key=api_key, base_url=base_url)
+    system_prompt, analysis_prompt = get_prompts(lang)
 
     response = client.chat.completions.create(
         model=model,
         messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": ANALYSIS_PROMPT.format(contract_text=contract_text)},
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": analysis_prompt.format(contract_text=contract_text)},
         ],
         temperature=0.1,
         max_tokens=4096,
