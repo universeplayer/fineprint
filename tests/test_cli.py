@@ -52,3 +52,11 @@ def test_write_report_defaults_to_markdown(tmp_path):
     content = output.read_text(encoding="utf-8")
     assert "# ContractGuard Analysis Report" in content
     assert "Non-refundable deposit" in content
+
+
+def test_write_report_creates_parent_directories(tmp_path):
+    output = tmp_path / "reports" / "lease" / "report.md"
+
+    _write_report(_sample_result(), str(output))
+
+    assert output.exists()

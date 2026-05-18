@@ -104,4 +104,6 @@ def _write_report(result, output: str, json_output: bool = False) -> None:
         content = result.model_dump_json(indent=2) + "\n"
     else:
         content = generate_markdown_report(result)
-    Path(output).write_text(content, encoding="utf-8")
+    output_path = Path(output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(content, encoding="utf-8")
